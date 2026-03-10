@@ -2,9 +2,9 @@ import type { ComponentProps } from "react";
 import { cn } from "../../app/utils/cn";
 
 interface ButtonProps extends ComponentProps<'button'> {
-
+  isLoading?: boolean
 }
-export function Button({ className, ...props }: ButtonProps) {
+export function Button({ className, isLoading, disabled, ...props }: ButtonProps) {
   return (
     <button
       {...props}
@@ -13,6 +13,7 @@ export function Button({ className, ...props }: ButtonProps) {
       disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition-all`,
         className
       )}
+      disabled={disabled ?? isLoading}
     ></button>
   )
 }

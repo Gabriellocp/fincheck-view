@@ -4,7 +4,8 @@ import { Input } from "../../components/Input";
 import { useRegisterController } from "./useRegisterController";
 
 export function Register() {
-  const { register, handleSubmit, errors } = useRegisterController()
+  const { register, handleSubmit, errors, isLoading } = useRegisterController()
+
   return (
     <>
       <header className="flex flex-col items-center gap-4">
@@ -35,7 +36,7 @@ export function Register() {
           error={errors.password?.message}
         />
 
-        <Button className="mt-2" type="submit">Criar conta</Button>
+        <Button className="mt-2" type="submit" isLoading={isLoading}>Criar conta</Button>
       </form>
     </>
   )
