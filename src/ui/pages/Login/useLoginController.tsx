@@ -14,10 +14,9 @@ export function useLoginController() {
     resolver: zodResolver(schema)
   });
 
-  const handleSubmit = hookHandleSubmit((data) => {
+  const handleSubmit = hookHandleSubmit(async (data) => {
     const { success, error } = schema.safeParse(data)
     if (success) {
-
     } else {
       console.log(error)
     }
