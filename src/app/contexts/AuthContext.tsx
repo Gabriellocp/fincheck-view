@@ -47,9 +47,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [isError])
 
-  if (isFetching) {
-    return <LaunchScreen />
-  }
 
   return (
     <AuthContext.Provider value={{
@@ -57,7 +54,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       signIn,
       signOut
     }}>
-      {children}
+      <LaunchScreen isLoading={isFetching} />
+      {!isFetching && children}
     </AuthContext.Provider>
   )
 }
