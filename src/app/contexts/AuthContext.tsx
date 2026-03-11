@@ -33,7 +33,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const { isError } = useQuery({
     queryKey: ['users', 'me'],
     queryFn: async () => await userService.me(),
-    enabled: signedIn
+    enabled: signedIn,
+    staleTime: Infinity
   })
 
   useEffect(() => {
