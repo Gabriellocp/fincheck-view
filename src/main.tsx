@@ -6,7 +6,14 @@ import { AuthProvider } from './app/contexts/AuthContext.tsx'
 import './index.css'
 import { Router } from './router/index.tsx'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false
+    }
+  }
+});
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
