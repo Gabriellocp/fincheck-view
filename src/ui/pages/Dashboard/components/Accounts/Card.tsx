@@ -3,14 +3,14 @@ import { BankAccountTypeIcon } from "../../../../components/icons/BankAccountTyp
 import type { iconsMap } from "../../../../components/icons/BankAccountTypeIcon/iconsMap";
 
 
-interface AccountCardProps {
+interface CardProps {
   color: string,
   name: string,
   balance: number,
   type: keyof typeof iconsMap
 }
 
-export function AccountCard({ balance, color, name, type }: AccountCardProps) {
+export function Card({ balance, color, name, type }: CardProps) {
   return (
     <div
       className="bg-white rounded-2xl p-4 h-50 flex flex-col justify-between border-b-4 border-teal-950"

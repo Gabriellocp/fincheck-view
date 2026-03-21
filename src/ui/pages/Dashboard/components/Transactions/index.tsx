@@ -30,6 +30,7 @@ export function Transactions() {
             slidesPerView={3}
             spaceBetween={16}
             centeredSlides
+            allowTouchMove={false}
           >
             <SliderNavigation />
             {MONTHS.map((month, index) => <SwiperSlide key={month}>

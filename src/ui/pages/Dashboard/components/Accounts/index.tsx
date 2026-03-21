@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';
 import { EyeIcon } from "../../../../components/icons/EyeIcon";
-import { AccountCard } from "./AccountCard";
-import { AccountsNavigation } from "./AccountsNavigation";
+import { Card } from "./Card";
+import { SliderNavigation } from "./SliderNavigation";
 import { useAccountsController } from './useAccountsController';
 export function Accounts() {
   const { sliderState, setSliderState, size } = useAccountsController()
@@ -31,16 +31,16 @@ export function Accounts() {
         >
           <div className="flex flex-row items-center justify-between mb-4" slot='container-start'>
             <strong className="text-white tracking-[-1px] text-lg">Minhas contas</strong>
-            <AccountsNavigation {...sliderState} />
+            <SliderNavigation {...sliderState} />
           </div>
           <SwiperSlide>
-            <AccountCard balance={1230} color="red" name="Nubank" type="CHECKING" />
+            <Card balance={1230} color="red" name="Nubank" type="CHECKING" />
           </SwiperSlide>
           <SwiperSlide>
-            <AccountCard balance={12313} color="black" name="XP" type="INVESTMENT" />
+            <Card balance={12313} color="black" name="XP" type="INVESTMENT" />
           </SwiperSlide>
           <SwiperSlide>
-            <AccountCard balance={5346} color="orange" name="Inter" type="CHECKING" />
+            <Card balance={5346} color="orange" name="Inter" type="CHECKING" />
           </SwiperSlide>
         </Swiper>
       </div>
