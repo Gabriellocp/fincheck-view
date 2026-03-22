@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useWindowResize } from "../../../../../app/hooks/useWindowResize";
+import { useDashboard } from "../DashboardContext/useDashboard";
 
 export function useAccountsController() {
   const [sliderState, setSliderState] = useState({
@@ -8,10 +9,15 @@ export function useAccountsController() {
   });
 
   const { width, size } = useWindowResize()
+
+  const { isValueVisible, toggleValueVisibility } = useDashboard()
+
   return {
     sliderState,
     setSliderState,
     width,
-    size
+    size,
+    isValueVisible,
+    toggleValueVisibility
   }
 }
