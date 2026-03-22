@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.css';
+import { formatCurrency } from '../../../../../app/utils/formatCurrency';
 import { EyeIcon } from "../../../../components/icons/EyeIcon";
 import { Card } from "./Card";
 import { SliderNavigation } from "./SliderNavigation";
@@ -11,7 +12,7 @@ export function Accounts() {
       <div className="text-white">
         <span className="tracking-[-0.5px] block">Saldo total</span>
         <div className="flex flex-row items-center gap-2">
-          <strong className="text-2xl tracking-[-1px]">R$1000,00</strong>
+          <strong className="text-2xl tracking-[-1px]">{formatCurrency(1000)}</strong>
           <button className="w-8 h-12 flex items-center justify-center">
             <EyeIcon open />
           </button>
