@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+button {
+cursor: pointer
+}
+
 @theme {
   /* Gray */
   --color-gray-50: #F8F9FA;

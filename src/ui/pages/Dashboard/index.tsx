@@ -1,11 +1,9 @@
-import { useAuth } from "../../../app/hooks/useAuth"
 import Logo from "../../../assets/images/logo.svg?react"
 import { UserAvatarMenu } from "../../components/UserAvatarMenu"
 import { Accounts } from "./components/Accounts"
 import { DashboardProvider } from "./components/DashboardContext"
 import { Transactions } from "./components/Transactions"
 export function Dashboard() {
-  const { signOut } = useAuth()
   return (
     <DashboardProvider>
       <div className="p-4 md:px-8 md:pb-8 md:pt-6 h-full w-full flex flex-col gap-4">
