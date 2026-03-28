@@ -12,7 +12,7 @@ export function UserAvatarMenu() {
           <span className="text-sm trackin-[-0.5px] text-teal-900 font-medium">GP</span>
         </div>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className="w-28">
+      <DropdownMenu.Content className="mt-2 w-28 data-[side=bottom]:animate-slide-down-and-fade">
         <DropdownMenu.Item className="flex justify-between items-center" onSelect={signOut}>
           Sair
           <ExitIcon className="w-6" />
