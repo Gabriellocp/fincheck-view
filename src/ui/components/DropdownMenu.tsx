@@ -24,7 +24,7 @@ function DropdownMenuRoot({ children }: ChildrenProps) {
 }
 function DropdownMenuTrigger({ children }: ChildrenProps) {
   return (
-    <RdxDropdownMenu.Trigger className='outline-none'>
+    <RdxDropdownMenu.Trigger className='outline-none' asChild>
       {children}
     </RdxDropdownMenu.Trigger>
   )

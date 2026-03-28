@@ -6,12 +6,16 @@ import EmptyState from '../../../../../assets/images/empty-state.svg?react';
 import { Spinner } from "../../../../components/Spinner";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
+import { FilterModal } from "./FilterModal";
 import { SliderNavigation } from "./SliderNavigation";
 import { SliderOption } from "./SliderOption";
 import { TransactionTypeDropdown } from "./TransactionTypeDropdown";
 import { useTransactionsController } from "./useTransactionsController";
 export function Transactions() {
-  const { isValueVisible, isLoading, isInitialLoading, transactions } = useTransactionsController()
+  const {
+    isValueVisible, isLoading, isInitialLoading, transactions,
+    handleCloseFilterModal, handleOpenFilterModal, isFilterModalOpen
+  } = useTransactionsController()
   const hasTransactions = transactions.length > 0
   return (
     <div className="bg-gray-100 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
@@ -19,12 +23,13 @@ export function Transactions() {
         <Spinner className='h-10 w-10 text-teal-900 fill-white' />
       </div>}
       {!isInitialLoading && <>
+        <FilterModal onClose={handleCloseFilterModal} open={isFilterModalOpen} />
         <header>
           <div className="flex items-center justify-between">
 
             <TransactionTypeDropdown />
 
-            <button>
+            <button onClick={handleOpenFilterModal}>
               <FilterIcon />
             </button>
           </div>
