@@ -2,6 +2,7 @@ import Logo from "../../../assets/images/logo.svg?react"
 import { UserAvatarMenu } from "../../components/UserAvatarMenu"
 import { Accounts } from "./components/Accounts"
 import { DashboardProvider } from "./components/DashboardContext"
+import { FAB } from "./components/FAB"
 import { Transactions } from "./components/Transactions"
 export function Dashboard() {
   return (
@@ -14,6 +15,7 @@ export function Dashboard() {
         <main
           className="flex-1 flex flex-col gap-4 md:flex-row max-h-full"
         >
+          <FAB />
           <div className="w-full md:w-1/2">
             <Accounts />
           </div>

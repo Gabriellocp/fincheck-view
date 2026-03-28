@@ -32,7 +32,10 @@ function DropdownMenuTrigger({ children }: ChildrenProps) {
 function DropdownMenuContent({ children, className }: ContentProps) {
   return (
     <RdxDropdownMenu.Portal>
-      <RdxDropdownMenu.Content className={cn("p-2 rounded-2xl bg-white space-y-2 shadow-[0px_11px_20px_0px_rgba(0, 0, 0,.1)]", className)}>
+      <RdxDropdownMenu.Content className={cn(`
+      p-2 rounded-2xl bg-white space-y-2 shadow-[0px_11px_20px_0px_rgba(0, 0, 0,.1)]
+      data-[side=top]:animate-slide-up-and-fade data-[side=bottom]:animate-slide-down-and-fade
+      `, className)}>
         {children}
       </RdxDropdownMenu.Content>
     </RdxDropdownMenu.Portal>

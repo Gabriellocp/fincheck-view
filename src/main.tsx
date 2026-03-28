@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Router />
         <Toaster />
       </AuthProvider>
-      <ReactQueryDevtools />
+      <ReactQueryDevtools buttonPosition='top-left' />
     </QueryClientProvider>
   </StrictMode>,
 )
