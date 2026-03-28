@@ -40,7 +40,7 @@ function DropdownMenuContent({ children, className }: ContentProps) {
 }
 function DropdownMenuItem({ children, className, onSelect }: ItemProps) {
   return (
-    <RdxDropdownMenu.Item className={cn(`outline-none min-h-12 flex items-center justify-center p-2
+    <RdxDropdownMenu.Item className={cn(`outline-none min-h-10 flex items-center justify-center p-2
     text-sm text-gray-800 data-highlighted:bg-gray-50 rounded-md transition-colors cursor-pointer`, className)}
       onSelect={onSelect}
     >
