@@ -9,7 +9,7 @@ import { Card } from "./Card";
 import { SliderNavigation } from "./SliderNavigation";
 import { useAccountsController } from './useAccountsController';
 export function Accounts() {
-  const { sliderState, setSliderState, size, isValueVisible, toggleValueVisibility, isLoading, accounts } = useAccountsController()
+  const { sliderState, setSliderState, size, isValueVisible, toggleValueVisibility, isLoading, accounts, newAccountModal } = useAccountsController()
   return (
     <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
       {isLoading && <div className='flex items-center justify-center flex-1'>
@@ -36,7 +36,9 @@ export function Accounts() {
             <button className='
             mt-4 h-51 border-2 border-dashed border-teal-600 rounded-2xl
             flex flex-col items-center justify-center gap-4 text-white
-            '>
+            '
+              onClick={() => newAccountModal.setOpen()}
+            >
               <div className='h-11 w-11 rounded-full border-2 border-dashed border-white flex items-center justify-center'>
                 <PlusIcon className='w-6 h-6' />
               </div>

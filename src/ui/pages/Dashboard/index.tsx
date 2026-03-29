@@ -4,6 +4,8 @@ import { Accounts } from "./components/Accounts"
 import { DashboardProvider } from "./components/DashboardContext"
 import { FAB } from "./components/FAB"
 import { Transactions } from "./components/Transactions"
+import { NewAccount } from "./modals/NewAccount"
+import { NewTransaction } from "./modals/NewTransaction"
 export function Dashboard() {
   return (
     <DashboardProvider>
@@ -15,6 +17,8 @@ export function Dashboard() {
         <main
           className="flex-1 flex flex-col gap-4 md:flex-row max-h-full"
         >
+          <NewAccount />
+          <NewTransaction />
           <FAB />
           <div className="w-full md:w-1/2">
             <Accounts />
