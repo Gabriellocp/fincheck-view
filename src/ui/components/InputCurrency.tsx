@@ -5,7 +5,7 @@ export function InputCurrency() {
       className='w-full font-bold text-[32px] tracking-[-1px] outline-none'
       decimalSeparator=','
       thousandSeparator='.'
-      defaultValue={123}
+      defaultValue={0}
     />
   )
 
