@@ -1,4 +1,4 @@
-import * as Dialog from "@radix-ui/react-dialog";
+import * as RdxDialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { cn } from "../../../app/utils/cn";
 import { Content } from "./Content";
@@ -13,18 +13,18 @@ interface ModalProps {
 
 export function Modal({ open, title, trailingAction, onClose, children }: ModalProps) {
   return (
-    <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Portal>
-        <Dialog.Overlay className={cn(`
+    <RdxDialog.Root open={open} onOpenChange={onClose}>
+      <RdxDialog.Portal>
+        <RdxDialog.Overlay className={cn(`
         fixed inset-0 bg-black/80 backdrop-blur-xs z-50
         `, "data-[state=open]:animate-overlay-show"
         )} />
-        <Dialog.Content className={cn(`
+        <RdxDialog.Content className={cn(`
         fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
         bg-white rounded-2xl p-6 space-y-10 z-50 outline-none shadow-[0px_11px_20px_0px_rgba(0,0,0,0.1)]
         w-full max-w-100
         `, "data-[state=open]:animate-content-show")}>
-          <Dialog.Title>
+          <RdxDialog.Title>
 
             <header className="h-12 flex items-center justify-between text-gray-800">
               <button onClick={onClose} className="w-12 h-12 flex items-center justify-center outline-none">
@@ -33,13 +33,13 @@ export function Modal({ open, title, trailingAction, onClose, children }: ModalP
               <span className="text-lg font-bold tracking-[-1px]">{title}</span>
               <div className="w-12 h-12 flex items-center justify-center">{trailingAction}</div>
             </header>
-          </Dialog.Title>
+          </RdxDialog.Title>
           <div>
             {children}
           </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+        </RdxDialog.Content>
+      </RdxDialog.Portal>
+    </RdxDialog.Root>
 
   )
 }
