@@ -5,12 +5,12 @@ import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
 import { Select } from "../../../../components/Select";
-import { useNewAccountController } from "./useNewAccountController";
+import { useEditAccountController } from "./useEditAccountController";
 
-export function NewAccount() {
-  const { open, setClose, register, errors, handleSubmit, control, isPending } = useNewAccountController()
+export function EditAccount() {
+  const { open, setClose, register, errors, handleSubmit, control, isPending } = useEditAccountController()
   return (
-    <Modal title="Nova conta" open={open} onClose={setClose}>
+    <Modal title="Editar conta" open={open} onClose={setClose}>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col justify-center">
           <span className="text-xs text-gray-600 tracking-[-0.5px]">Saldo</span>

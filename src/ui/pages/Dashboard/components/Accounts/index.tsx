@@ -63,7 +63,7 @@ export function Accounts() {
               </div>
               {accounts.map(account => (
                 <SwiperSlide>
-                  <Card balance={account.currentBalance} color={account.color} name={account.name} type={account.type} />
+                  <Card data={account} />
                 </SwiperSlide>
               )
               )}

@@ -13,7 +13,7 @@ interface DashboardContextValue {
   isValueVisible: boolean,
   toggleValueVisibility: () => void,
   newAccountModal: ModalProps,
-  editAccountModal: ModalProps<BankAccount>,
+  editAccountModal: ModalProps<BankAccount> & { editBankAccount: BankAccount | null },
   transactionModal: ModalProps<TransactionType>,
   transactionType: TransactionType | null
 }
@@ -64,7 +64,7 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
       isValueVisible,
       toggleValueVisibility: handleValueVisible,
       newAccountModal: { setOpen: openNewAccountModal, setClose: closeNewAccountModal, open: isNewAccountModalOpen },
-      editAccountModal: { setOpen: openEditAccountModal, setClose: closeEditAccountModal, open: isEditAccountModalOpen },
+      editAccountModal: { setOpen: openEditAccountModal, setClose: closeEditAccountModal, open: isEditAccountModalOpen, editBankAccount },
       transactionModal: { setOpen: openNewTransactionModal, setClose: closeNewTransactionModal, open: isNewTransactionModalOpen },
       transactionType
     }}>
