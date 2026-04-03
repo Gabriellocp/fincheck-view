@@ -1,6 +1,5 @@
+import type { BankAccountTypes } from "../../entities/bankAccount";
 import { httpClient } from "../httpClient";
-
-export type BankAccountTypes = 'INVESTMENT' | 'CHECKING' | 'CASH';
 
 export interface CreateBankAccountParams {
   name: string,
