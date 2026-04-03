@@ -9,7 +9,7 @@ import { Card } from "./Card";
 import { SliderNavigation } from "./SliderNavigation";
 import { useAccountsController } from './useAccountsController';
 export function Accounts() {
-  const { sliderState, setSliderState, size, isValueVisible, toggleValueVisibility, isLoading, accounts, newAccountModal } = useAccountsController()
+  const { sliderState, setSliderState, size, isValueVisible, toggleValueVisibility, isLoading, accounts, newAccountModal, currentBalance } = useAccountsController()
   return (
     <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
       {isLoading && <div className='flex items-center justify-center flex-1'>
@@ -19,7 +19,7 @@ export function Accounts() {
         <div className="text-white">
           <span className="tracking-[-0.5px] block">Saldo total</span>
           <div className="flex flex-row items-center gap-2">
-            <strong className={cn("text-2xl tracking-[-1px]", !isValueVisible && "blur-md")}>{formatCurrency(1000)}</strong>
+            <strong className={cn("text-2xl tracking-[-1px]", !isValueVisible && "blur-md")}>{formatCurrency(currentBalance)}</strong>
             <button
               className="w-8 h-12 flex items-center justify-center"
               onClick={toggleValueVisibility}
@@ -61,15 +61,12 @@ export function Accounts() {
                 <strong className="text-white tracking-[-1px] text-lg">Minhas contas</strong>
                 <SliderNavigation {...sliderState} />
               </div>
-              <SwiperSlide>
-                <Card balance={1230} color="red" name="Nubank" type="CHECKING" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Card balance={12313} color="black" name="XP" type="INVESTMENT" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Card balance={5346} color="orange" name="Inter" type="CHECKING" />
-              </SwiperSlide>
+              {accounts.map(account => (
+                <SwiperSlide>
+                  <Card balance={account.currentBalance} color={account.color} name={account.name} type={account.type} />
+                </SwiperSlide>
+              )
+              )}
             </Swiper>
           }
         </div>
