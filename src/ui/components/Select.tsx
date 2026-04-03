@@ -11,13 +11,16 @@ interface SelectProps {
   className?: string,
   error?: string,
   placeholder?: string,
-  options: { value: string, label: string }[]
+  options: { value: string, label: string }[],
+  onChange?: (value: string) => void,
+  value?: string
 }
 
-export function Select({ className, error, placeholder, options }: SelectProps) {
-  const [selectedValue, setSelectedValue] = useState('')
+export function Select({ className, error, placeholder, options, onChange, value }: SelectProps) {
+  const [selectedValue, setSelectedValue] = useState(value ?? '')
   function handleSelect(value: string) {
     setSelectedValue(value)
+    onChange?.(value)
   }
   return (
     <div>
@@ -27,7 +30,7 @@ export function Select({ className, error, placeholder, options }: SelectProps) 
           pointer-events-none text-gray-700`,
           selectedValue && 'text-xs left-3.25 top-2 transition-all translate-y-0'
         )}>{placeholder}</label>
-        <RdxSelect.Root onValueChange={handleSelect}>
+        <RdxSelect.Root onValueChange={handleSelect} value={value}>
           <RdxSelect.Trigger
             className={cn(
               `bg-white w-full rounded-lg border border-gray-500 px-3 h-13 text-gray-800
@@ -57,7 +60,7 @@ export function Select({ className, error, placeholder, options }: SelectProps) 
                     <RdxSelect.Item
                       key={option.value}
                       className={cn(
-                        `p-2 text-sm text-gray-800 data-[state=checked]:font-bold data-highlighted:bg-gray-100 rounded-lg transition-colors`,
+                        `p-2 text-sm text-gray-800 data-[state=checked]:font-bold data-highlighted:bg-gray-100 outline-none rounded-lg transition-colors`,
                       )}
                       value={option.value}
                     >

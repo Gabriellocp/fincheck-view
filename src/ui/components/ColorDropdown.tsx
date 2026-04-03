@@ -7,6 +7,8 @@ import { ColorIcon } from "./icons/ColorIcon";
 interface ColorDropdownProps {
   className?: string,
   error?: string,
+  onChange?: (value: string) => void,
+  value?: string
 }
 
 type Color = {
@@ -31,10 +33,15 @@ const colors: Color[] = [
   { color: '#212529', bg: '#F8F9FA' },
 ];
 
-export function ColorDropdown({ className, error }: ColorDropdownProps) {
-  const [selectedColor, setSelectedColor] = useState<Color | null>(null)
+export function ColorDropdown({ className, error, onChange, value }: ColorDropdownProps) {
+  const [selectedColor, setSelectedColor] = useState<Color | null>(() => {
+    if (!value) return null;
+    const color = colors.find(c => c.color === value) ?? null;
+    return color;
+  })
   function handleSelect(color: Color) {
     setSelectedColor(color)
+    onChange?.(color.color)
   }
   return (
     <div>
