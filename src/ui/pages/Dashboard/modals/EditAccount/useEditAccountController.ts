@@ -1,12 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
 import { accountKeys } from "../../../../../app/config/queryKeys";
 import { bankAccountService } from "../../../../../app/services/bankAccountService";
-import { currencyToNumber } from "../../../../../app/utils/currencyToNumber";
 import { useDashboard } from "../../components/DashboardContext/useDashboard";
 
 const bankAccountSchema = z.object({
@@ -20,7 +19,7 @@ const bankAccountSchema = z.object({
 
 })
 
-type CreateAccountData = z.infer<typeof bankAccountSchema>
+type EditAccountData = z.infer<typeof bankAccountSchema>
 
 export function useEditAccountController() {
   const queryClient = useQueryClient();
@@ -31,7 +30,7 @@ export function useEditAccountController() {
     handleSubmit: hookFormSubmit,
     reset,
     control
-  } = useForm<CreateAccountData>({
+  } = useForm<EditAccountData>({
     resolver: zodResolver(bankAccountSchema),
   })
 
@@ -44,17 +43,20 @@ export function useEditAccountController() {
     });
   }, [editAccountModal.editBankAccount])
 
-  const { isPending, mutateAsync } = useMutation({
-    mutationKey: ['updateAccount'],
+  const { isPending, mutateAsync: updateAccountMutation } = useMutation({
+    mutationKey: accountKeys.update,
     mutationFn: bankAccountService.update
   })
-
+  const { isPending: isDeletePending, mutateAsync: deleteAccountMutation } = useMutation({
+    mutationKey: accountKeys.delete,
+    mutationFn: bankAccountService.remove
+  })
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
-
-      await mutateAsync({
+      await updateAccountMutation({
         ...data,
-        initialBalance: currencyToNumber(data.initialBalance.toString()),
+        initialBalance: Number(data.initialBalance),
         id: editAccountModal.editBankAccount!.id
       })
       toast.success('Conta foi alterada com sucesso!')
@@ -68,12 +70,34 @@ export function useEditAccountController() {
 
   })
 
+  const handleOpenDeleteModal = () => {
+    setIsDeleteModalOpen(true)
+  }
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteAccountMutation(editAccountModal.editBankAccount!.id)
+      toast.success('Conta foi deletada com sucesso!')
+      handleCloseDeleteModal()
+      editAccountModal.setClose()
+      queryClient.invalidateQueries({ queryKey: accountKeys.all })
+      reset()
+
+    } catch {
+      toast.error('Erro ao deletar conta')
+    }
+
+  }
   return {
     ...editAccountModal,
     register,
     errors,
     handleSubmit,
     control,
-    isPending
+    isPending,
+    deleteModal: { setOpen: handleOpenDeleteModal, setClose: handleCloseDeleteModal, open: isDeleteModalOpen, delete: handleDeleteAccount, isLoading: isDeletePending }
   }
 }

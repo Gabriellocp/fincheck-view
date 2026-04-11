@@ -1,16 +1,29 @@
 import { Controller } from "react-hook-form";
 import { Button } from "../../../../components/Button";
 import { ColorDropdown } from "../../../../components/ColorDropdown";
+import { ConfirmDeleteModal } from "../../../../components/ConfirmDeleteModal";
 import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
 import { Select } from "../../../../components/Select";
+import { TrashIcon } from "../../../../components/icons/TrashIcon";
 import { useEditAccountController } from "./useEditAccountController";
 
 export function EditAccount() {
-  const { open, setClose, register, errors, handleSubmit, control, isPending } = useEditAccountController()
+  const { open, setClose, register, errors, handleSubmit, control, isPending, deleteModal } = useEditAccountController()
+  if (deleteModal.open) {
+    return <ConfirmDeleteModal
+      onConfirm={deleteModal.delete}
+      title="Tem certeza que deseja excluir essa conta?"
+      description="Ao excluir a conta, também serão excluídos todos os registro de receitas e despesas relacionados."
+      open={deleteModal.open} onClose={deleteModal.setClose} />
+  }
   return (
-    <Modal title="Editar conta" open={open} onClose={setClose}>
+    <Modal title="Editar conta" open={open} onClose={setClose} trailingAction={
+      <button className="rounded-xl hover:bg-red-100 p-2" onClick={deleteModal.setOpen}>
+        <TrashIcon className="w-6 h-6 text-red-900 " />
+      </button>
+    }>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col justify-center">
           <span className="text-xs text-gray-600 tracking-[-0.5px]">Saldo</span>

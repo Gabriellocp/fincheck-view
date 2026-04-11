@@ -7,7 +7,8 @@ const userKeys = {
 const accountKeys = {
   all: ['all'],
   create: ['accounts', 'create'],
-  update: ['accounts', 'update']
+  update: ['accounts', 'update'],
+  delete: ['accounts', 'delete'],
 }
 export {
   accountKeys, userKeys
