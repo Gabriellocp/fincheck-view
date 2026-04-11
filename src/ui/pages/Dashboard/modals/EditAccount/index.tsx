@@ -70,7 +70,7 @@ export function EditAccount() {
             }}
           />
           <Button isLoading={isPending}>
-            Criar
+            Editar
           </Button>
         </div>
       </form>
