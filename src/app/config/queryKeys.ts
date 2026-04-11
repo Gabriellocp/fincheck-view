@@ -5,12 +5,16 @@ const userKeys = {
 
 
 const accountKeys = {
-  all: ['all'],
+  all: ['accounts'],
   create: ['accounts', 'create'],
   update: ['accounts', 'update'],
   delete: ['accounts', 'delete'],
 }
+
+const categoryKeys = {
+  all: ['category']
+}
 export {
-  accountKeys, userKeys
+  accountKeys, categoryKeys, userKeys
 }
 
