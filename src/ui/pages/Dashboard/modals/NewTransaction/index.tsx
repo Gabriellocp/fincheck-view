@@ -8,7 +8,18 @@ import { Select } from "../../../../components/Select";
 import { useNewTransactionController } from "./useNewTransactionController";
 
 export function NewTransaction() {
-  const { open, setClose, transactionType, control, errors, register, handleSubmit, accounts, categories } = useNewTransactionController()
+  const {
+    open,
+    setClose,
+    transactionType,
+    control,
+    errors,
+    register,
+    handleSubmit,
+    accounts,
+    categories,
+    isLoading
+  } = useNewTransactionController()
   const isExpense = transactionType === 'EXPENSE'
   return (
     <Modal title={isExpense ? 'Nova despesa' : 'Nova receita'} open={open} onClose={setClose}>
@@ -75,7 +86,7 @@ export function NewTransaction() {
               return (<DatePickerInput value={value} onChange={onChange} />)
             }}
           />
-          <Button>
+          <Button isLoading={isLoading}>
             Criar
           </Button>
         </div>

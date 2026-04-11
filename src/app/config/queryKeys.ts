@@ -14,7 +14,12 @@ const accountKeys = {
 const categoryKeys = {
   all: ['category']
 }
+
+const transactionKeys = {
+  all: ['transaction'],
+  create: ['transaction', 'create'],
+}
 export {
-  accountKeys, categoryKeys, userKeys
+  accountKeys, categoryKeys, transactionKeys, userKeys
 }
 

@@ -1,9 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import z from "zod"
+import { transactionKeys } from "../../../../../app/config/queryKeys"
 import { useBankAccounts } from "../../../../../app/hooks/useBankAccounts"
 import { useCategories } from "../../../../../app/hooks/useCategories"
+import { transactionService } from "../../../../../app/services/transactionService"
 import { useDashboard } from "../../components/DashboardContext/useDashboard"
 
 const transactionSchema = z.object({
@@ -17,6 +21,7 @@ const transactionSchema = z.object({
 type CreateTransactionData = z.infer<typeof transactionSchema>
 
 export function useNewTransactionController() {
+  const queryClient = useQueryClient()
   const {
     register,
     formState: { errors },
@@ -26,6 +31,10 @@ export function useNewTransactionController() {
   } = useForm<CreateTransactionData>({
     resolver: zodResolver(transactionSchema)
   })
+  const { isPending, mutateAsync } = useMutation({
+    mutationKey: transactionKeys.create,
+    mutationFn: transactionService.create
+  })
   const { transactionModal, transactionType } = useDashboard()
   const { accounts, isLoading: isLoadingAccounts } = useBankAccounts()
   const { categories: rawCategories, isLoading: isLoadingCategories } = useCategories()
@@ -33,7 +42,21 @@ export function useNewTransactionController() {
     return rawCategories.filter(category => category.type === transactionType)
   }, [rawCategories, transactionType])
   const handleSubmit = hookFormSubmit(async (data) => {
-    console.log(data)
+    const typeText = transactionType === 'EXPENSE' ? 'Despesa' : 'Receita';
+    try {
+      await mutateAsync({
+        ...data,
+        type: transactionType!,
+        value: Number(data.value),
+        date: data.date.toISOString()
+      })
+      queryClient.invalidateQueries({ queryKey: transactionKeys.all })
+      transactionModal.setClose()
+      reset()
+      toast.success(`${typeText} adicionada com sucesso`)
+    } catch {
+      toast.error(`Erro ao criar ${typeText}`)
+    }
   })
   return {
     ...transactionModal,
@@ -45,6 +68,8 @@ export function useNewTransactionController() {
     accounts,
     isLoadingAccounts,
     isLoadingCategories,
-    categories
+    categories,
+    isLoading: isPending,
+
   }
 }
