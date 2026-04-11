@@ -3,6 +3,7 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { LaunchScreen } from "../../ui/components/LaunchScreen";
 import { localStorageKeys } from "../config/keys";
+import { userKeys } from "../config/queryKeys";
 import { userService } from "../services/userService";
 
 interface AuthContextValue {
@@ -29,12 +30,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signOut = useCallback(() => {
     localStorage.removeItem(localStorageKeys.ACCESS_TOKEN)
     setSignedIn(false)
-    queryClient.removeQueries({ queryKey: ['users', 'me'] })
+    queryClient.removeQueries({ queryKey: userKeys.me })
   }, [])
 
 
   const { isError, isFetching, isSuccess } = useQuery({
-    queryKey: ['users', 'me'],
+    queryKey: userKeys.me,
     queryFn: async () => await userService.me(),
     enabled: signedIn,
     staleTime: Infinity

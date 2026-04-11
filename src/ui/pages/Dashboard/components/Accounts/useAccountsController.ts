@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import { accountKeys } from "../../../../../app/config/queryKeys";
 import { useWindowResize } from "../../../../../app/hooks/useWindowResize";
 import { bankAccountService } from "../../../../../app/services/bankAccountService";
 import { useDashboard } from "../DashboardContext/useDashboard";
@@ -15,7 +16,7 @@ export function useAccountsController() {
   const { isValueVisible, toggleValueVisibility, newAccountModal } = useDashboard()
 
   const { data = [], isFetching } = useQuery({
-    queryKey: ['getAccounts'],
+    queryKey: accountKeys.all,
     queryFn: bankAccountService.getAll
   })
 
