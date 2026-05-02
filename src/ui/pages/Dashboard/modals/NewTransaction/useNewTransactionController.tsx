@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import z from "zod"
-import { transactionKeys } from "../../../../../app/config/queryKeys"
+import { accountKeys, transactionKeys } from "../../../../../app/config/queryKeys"
 import { useBankAccounts } from "../../../../../app/hooks/useBankAccounts"
 import { useCategories } from "../../../../../app/hooks/useCategories"
 import { transactionService } from "../../../../../app/services/transactionService"
@@ -51,6 +51,7 @@ export function useNewTransactionController() {
         date: data.date.toISOString()
       })
       queryClient.invalidateQueries({ queryKey: transactionKeys.all })
+      queryClient.invalidateQueries({ queryKey: accountKeys.all })
       transactionModal.setClose()
       reset()
       toast.success(`${typeText} adicionada com sucesso`)
