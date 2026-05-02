@@ -1,7 +1,7 @@
 import type { Transaction } from "../../entities/transaction";
 import { httpClient } from "../httpClient";
 
-type TransactionFilters = {
+export type TransactionFilters = {
   month: number,
   year: number,
   bankAccountId?: string,
