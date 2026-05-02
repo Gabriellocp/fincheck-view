@@ -18,6 +18,7 @@ const categoryKeys = {
 const transactionKeys = {
   all: ['transaction'],
   create: ['transaction', 'create'],
+  update: ['transaction', 'update'],
 }
 export {
   accountKeys, categoryKeys, transactionKeys, userKeys

@@ -7,6 +7,7 @@ import EmptyState from '../../../../../assets/images/empty-state.svg?react';
 import { Spinner } from "../../../../components/Spinner";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
+import { EditTransaction } from "../../modals/EditTransaction";
 import { FilterModal } from "./FilterModal";
 import { SliderNavigation } from "./SliderNavigation";
 import { SliderOption } from "./SliderOption";
@@ -16,7 +17,7 @@ export function Transactions() {
   const {
     isValueVisible, isLoading, isInitialLoading, transactions,
     handleCloseFilterModal, handleOpenFilterModal, isFilterModalOpen,
-    filters
+    filters, editModal
   } = useTransactionsController()
   const hasTransactions = transactions.length > 0
   return (
@@ -78,11 +79,14 @@ export function Transactions() {
           <div
             className="mt-4 space-y-2 flex-1 overflow-y-auto"
           >
+            <EditTransaction onClose={editModal.setClose} open={editModal.open} transaction={editModal.transaction} />
             {
               transactions.map((transaction) => {
                 const isExpense = transaction.type === 'EXPENSE';
                 return <div
                   key={transaction.id}
+                  role="button"
+                  onClick={() => editModal.setOpen(transaction)}
                   className="rounded-2xl bg-white flex items-center justify-between gap-4 p-4">
                   <div className="flex flex-1 gap-3 items-center">
                     <CategoryIcon type={isExpense ? 'expense' : 'income'} category={transaction.category?.icon} />
