@@ -1,11 +1,13 @@
 import { Controller } from "react-hook-form";
 import type { Transaction } from "../../../../../app/entities/transaction";
 import { Button } from "../../../../components/Button";
+import { ConfirmDeleteModal } from "../../../../components/ConfirmDeleteModal";
 import { DatePickerInput } from "../../../../components/DatePickerInput";
 import { Input } from "../../../../components/Input";
 import { InputCurrency } from "../../../../components/InputCurrency";
 import { Modal } from "../../../../components/Modal";
 import { Select } from "../../../../components/Select";
+import { TrashIcon } from "../../../../components/icons/TrashIcon";
 import { useEditTransactionController } from "./useEditTransactionController";
 
 interface EditTransactionProps {
@@ -22,11 +24,22 @@ export function EditTransaction({ transaction, open, onClose }: EditTransactionP
     handleSubmit,
     accounts,
     categories,
-    isLoading
+    isLoading,
+    deleteModal
   } = useEditTransactionController({ transaction: transaction, onClose: onClose })
   const isExpense = transaction?.type === 'EXPENSE'
+  if (deleteModal.open) {
+    return <ConfirmDeleteModal
+      onConfirm={deleteModal.delete}
+      title={`Tem certeza que deseja excluir essa ${isExpense ? 'Despesa' : 'Receita'}?`}
+      open={deleteModal.open} onClose={deleteModal.setClose} />
+  }
   return (
-    <Modal title={isExpense ? 'Editar despesa' : 'Editar receita'} open={open} onClose={onClose}>
+    <Modal title={isExpense ? 'Editar despesa' : 'Editar receita'} open={open} onClose={onClose} trailingAction={
+      <button className="rounded-xl hover:bg-red-100 p-2" onClick={deleteModal.setOpen}>
+        <TrashIcon className="w-6 h-6 text-red-900 " />
+      </button>
+    }>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col justify-center">
           <span className="text-xs text-gray-600 tracking-[-0.5px]">{`Valor da ${isExpense ? 'despesa' : 'receita'}`}</span>

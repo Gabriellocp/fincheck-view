@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import z from "zod"
@@ -57,10 +57,15 @@ export function useEditTransactionController({ transaction, onClose }: EditTrans
     });
   }, [transaction])
 
-  const { isPending, mutateAsync } = useMutation({
+  const { isPending: isLoadingUpdate, mutateAsync: updateTransaction } = useMutation({
     mutationKey: transactionKeys.update,
     mutationFn: transactionService.update
   })
+  const { isPending: isLoadingDelete, mutateAsync: deleteTransaction } = useMutation({
+    mutationKey: transactionKeys.delete,
+    mutationFn: transactionService.remove
+  })
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const { accounts, isLoading: isLoadingAccounts } = useBankAccounts()
   const { categories: rawCategories, isLoading: isLoadingCategories } = useCategories()
   const categories = useMemo(() => {
@@ -70,7 +75,7 @@ export function useEditTransactionController({ transaction, onClose }: EditTrans
     if (!transaction) return;
     const typeText = transaction?.type === 'EXPENSE' ? 'Despesa' : 'Receita';
     try {
-      await mutateAsync({
+      await updateTransaction({
         id: transaction.id,
         ...data,
         type: transaction.type,
@@ -86,6 +91,25 @@ export function useEditTransactionController({ transaction, onClose }: EditTrans
       toast.error(`Erro ao alterar ${typeText}`)
     }
   })
+  const handleOpenDeleteModal = () => {
+    setIsDeleteModalOpen(true)
+  }
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+  const handleDeleteTransaction = async () => {
+    if (!transaction) return;
+    const typeText = transaction?.type === 'EXPENSE' ? 'Despesa' : 'Receita';
+    try {
+      await deleteTransaction(transaction.id)
+      queryClient.invalidateQueries({ queryKey: transactionKeys.all })
+      queryClient.invalidateQueries({ queryKey: accountKeys.all })
+      toast.success(`${typeText} deletada com sucesso`)
+      onClose()
+    } catch {
+      toast.error(`Erro ao deletar ${typeText}`)
+    }
+  }
   return {
     register,
     errors,
@@ -95,7 +119,13 @@ export function useEditTransactionController({ transaction, onClose }: EditTrans
     isLoadingAccounts,
     isLoadingCategories,
     categories,
-    isLoading: isPending,
-
+    isLoading: isLoadingUpdate,
+    deleteModal: {
+      open: isDeleteModalOpen,
+      setClose: handleCloseDeleteModal,
+      setOpen: handleOpenDeleteModal,
+      delete: handleDeleteTransaction,
+      isLoading: isLoadingDelete
+    }
   }
 }
