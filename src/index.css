@@ -4,7 +4,9 @@ button {
 cursor: pointer
 }
 
+
 @theme {
+  --font-sans: 'DM Sans';
   /* Gray */
   --color-gray-50: #F8F9FA;
   --color-gray-100: #F1F3F5;
